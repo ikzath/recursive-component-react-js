@@ -6,6 +6,7 @@ import {  Navbar, NavbarBrand } from 'reactstrap';
 
 
 function App() {
+  
   const [isOpen, setIsOpen] = useState(false);
   const [appendItems, setappendItems] = useState([]);
 
@@ -15,7 +16,7 @@ function App() {
     setIsOpen(!isOpen)
   }
 
-  const appendCHild = ()=> {
+  const appendChild = ()=> {
     setappendItems([...appendItems, <Article />]);
   }
 
@@ -23,33 +24,30 @@ function App() {
 return (
     
   <div>
-  <Navbar color="white" light expand="md">
-    <NavbarBrand >Recursive Code Challenge</NavbarBrand>      
-    </Navbar>
-      {/* <div>
-      <Button color="primary" onClick={toggle} style={{ marginBottom: '1rem' }}>{ isOpen ? 'Hide All': 'Add New Card'}</Button>
-      <Collapse isOpen={isOpen}>        
-        <Article />
-      </Collapse>      
-    </div> */}
-                {<Card style={{ backgroundColor: 'whitesmoke'}}>
-                <CardBody>
-                    <div className="card__buttons" style={{ display: 'flex', justifyContent: 'space-around' }}>
-                    <Button color="primary"  onClick={ onClickChange} style={{ marginBottom: '1rem' }}>{ isOpen ? 'Hide All': 'Add/Show Card'}</Button>
-                    {isOpen && <Button onClick={appendCHild} style={{ backgroundColor: 'green'}}>Add New Card</Button> }
-                    {/* <Button primary='danger' style={{ backgroundColor: 'red'}} >Delete Card</Button> */} 
-                    </div>
-                </CardBody>
-            </Card> }
+    <Navbar color="white" light expand="md">
+      <NavbarBrand >Recursive Code Challenge</NavbarBrand>      
+      </Navbar>
 
-            < Collapse isOpen={isOpen}>        
-            {
-                click &&  <Article />
-              }
-              { appendItems }                      
-            </Collapse>      
-        </div>
+    {<Card style={{ backgroundColor: 'whitesmoke'}}>
+        <CardBody>
+            <div className="card__buttons" style={{ display: 'flex', justifyContent: 'space-around' }}>
+            <Button color="primary"  onClick={ onClickChange} style={{ marginBottom: '1rem' }}>{ isOpen ? 'Hide All': 'Add/Show Card'}</Button>
+            {isOpen && <Button onClick={appendChild} style={{ backgroundColor: 'green'}}>Add New Card</Button> }
+            {/* <Button primary='danger' style={{ backgroundColor: 'red'}} >Delete Card</Button> */} 
+            </div>
+        </CardBody>
+    </Card> }
+
+    < Collapse isOpen={isOpen}>        
+          {
+              click &&  <Article />
+            }
+          { appendItems.map(( (i, idx) => 
+          <Article key={idx} />
+          )) } 
+    </Collapse>      
+</div>
 );
-  }
+}
 
 export default App;
