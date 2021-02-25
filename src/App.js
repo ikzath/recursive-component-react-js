@@ -1,24 +1,55 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
-import { Header } from "./components/Header";
-import { Balance } from "./components/Balance";
-import { IncomeExpenses } from "./components/IncomeExpenses";
-import { TransactionList } from "./components/TransactionList";
-import { AddTransaction } from "./components/AddTransaction";
-import { Globalprovider } from "./context/GlobalState";
+import { Collapse, Button, CardBody, Card } from 'reactstrap';
+import Article from './Article';
+import {  Navbar, NavbarBrand } from 'reactstrap';
 
 
 function App() {
-  return (
-    <Globalprovider>
-    <Header/>
-    <div className='container'>
-    <Balance/>
-    <IncomeExpenses/>
-    <TransactionList/>
-    <AddTransaction/>
-   </div>
-   </Globalprovider>  );
-}
+  const [isOpen, setIsOpen] = useState(false);
+  const [appendItems, setappendItems] = useState([]);
+
+  const [click, setclick] = useState(false);
+  const onClickChange = ()=> {
+    setclick(true);
+    setIsOpen(!isOpen)
+  }
+
+  const appendCHild = ()=> {
+    setappendItems([...appendItems, <Article />]);
+  }
+
+
+return (
+    
+  <div>
+  <Navbar color="white" light expand="md">
+    <NavbarBrand >Recursive Code Challenge</NavbarBrand>      
+    </Navbar>
+      {/* <div>
+      <Button color="primary" onClick={toggle} style={{ marginBottom: '1rem' }}>{ isOpen ? 'Hide All': 'Add New Card'}</Button>
+      <Collapse isOpen={isOpen}>        
+        <Article />
+      </Collapse>      
+    </div> */}
+                {<Card style={{ backgroundColor: 'whitesmoke'}}>
+                <CardBody>
+                    <div className="card__buttons" style={{ display: 'flex', justifyContent: 'space-around' }}>
+                    <Button color="primary"  onClick={ onClickChange} style={{ marginBottom: '1rem' }}>{ isOpen ? 'Hide All': 'Add/Show Card'}</Button>
+                    {isOpen && <Button onClick={appendCHild} style={{ backgroundColor: 'green'}}>Add New Card</Button> }
+                    {/* <Button primary='danger' style={{ backgroundColor: 'red'}} >Delete Card</Button> */} 
+                    </div>
+                </CardBody>
+            </Card> }
+
+            < Collapse isOpen={isOpen}>        
+            {
+                click &&  <Article />
+              }
+              { appendItems }                      
+            </Collapse>      
+        </div>
+);
+  }
 
 export default App;
