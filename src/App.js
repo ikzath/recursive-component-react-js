@@ -7,18 +7,18 @@ import {  Navbar, NavbarBrand } from 'reactstrap';
 
 function App() {
   
-  const [isOpen, setIsOpen] = useState(false);
-  const [appendItems, setappendItems] = useState([]);
+    const [isOpen, setIsOpen] = useState(false);
+    const [appendItems, setappendItems] = useState([]);
+    
+    const [click, setclick] = useState(false);
+    const onClickChange = ()=> {
+      setclick(true);
+      setIsOpen(!isOpen)
+    }
 
-  const [click, setclick] = useState(false);
-  const onClickChange = ()=> {
-    setclick(true);
-    setIsOpen(!isOpen)
-  }
-
-  const appendChild = ()=> {
-    setappendItems([...appendItems, <Article />]);
-  }
+    const appendChild = ()=> {
+      setappendItems([...appendItems, <Article />]);
+    }
 
 
 return (
@@ -26,28 +26,29 @@ return (
   <div>
     <Navbar color="white" light expand="md">
       <NavbarBrand >Recursive Code Challenge</NavbarBrand>      
-      </Navbar>
+    </Navbar>
 
     {<Card style={{ backgroundColor: 'whitesmoke'}}>
         <CardBody>
             <div className="card__buttons" style={{ display: 'flex', justifyContent: 'space-around' }}>
             <Button color="primary"  onClick={ onClickChange} style={{ marginBottom: '1rem' }}>{ isOpen ? 'Hide All': 'Add/Show Card'}</Button>
             {isOpen && <Button onClick={appendChild} style={{ backgroundColor: 'green'}}>Add New Card</Button> }
-            {/* <Button primary='danger' style={{ backgroundColor: 'red'}} >Delete Card</Button> */} 
             </div>
         </CardBody>
     </Card> }
 
-    < Collapse isOpen={isOpen}>        
-          {
-              click &&  <Article />
-            }
-          { appendItems.map(( (i, idx) => 
-          <Article key={idx} />
-          )) } 
+    < Collapse isOpen={isOpen}>   
+
+            { click &&  <div style={{ marginBottom: '5px' }}>
+              <Article />
+              </div> }
+            
+            { appendItems.map(( (i, idx) => 
+            <Article key={idx} />
+            )) } 
     </Collapse>      
-</div>
-);
+  </div>
+  );
 }
 
 export default App;
